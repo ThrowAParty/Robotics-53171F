@@ -1,0 +1,18 @@
+{
+	"extension": {
+		"version": "0.3.0",
+		"json": 1
+	},
+	"project": {
+		"name": "TestingCode",
+		"description": "why use python when cpp",
+		"creationDate": "12/8/2022, 4:21:27 PM",
+		"platform": "V5",
+		"language": "cpp",
+		"slot": 1,
+		"sdkVersion": "V5_20220726_10_00_00",
+		"cpp": {
+			"includePath": []
+		}
+	}
+}
