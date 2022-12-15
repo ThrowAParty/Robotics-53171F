@@ -58,7 +58,24 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+bool speldeMode = false;
+
+void toggleSpeldeMode() {
+  speldeMode = !speldeMode;
+};
+
 void usercontrol(void) {
+  // main peripherals
+  brain myBrain = brain();
+  controller myController = controller();
+
+  // motors
+  motor leftDriveMotor = motor(PORT11, ratio18_1, false);
+  motor rightDriveMotor = motor(PORT12, ratio18_1, true);
+  motor flyWheel = motor(PORT5, ratio36_1, false);
+
+  myController.ButtonUp.pressed(toggleSpeldeMode);
+
   // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
@@ -69,6 +86,17 @@ void usercontrol(void) {
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
     // ........................................................................
+
+    // drive
+    if (speldeMode) {
+      leftDriveMotor.spin(forward, myController.Axis3.value() * myController.Axis4.value() * 0.5, percent);
+      rightDriveMotor.spin(forward, myController.Axis3.value() * myController.Axis4.value() * 0.5, percent);
+    } else {
+      leftDriveMotor.spin(forward, myController.Axis3.value(), percent);
+      rightDriveMotor.spin(forward, myController.Axis2.value(), percent);
+    }
+
+    flyWheel.spin(forward, myController.ButtonA.pressing() && 100 || 0, percent);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
