@@ -14,6 +14,22 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 
+bool speldeMode = false;
+
+void toggleSpeldeMode() {
+  speldeMode = !speldeMode;
+};
+
+// main peripherals
+brain myBrain = brain();
+controller myController = controller();
+
+// motors
+motor leftDriveMotor = motor(PORT11, ratio18_1, false);
+motor rightDriveMotor = motor(PORT12, ratio18_1, true);
+motor flyWheel = motor(PORT5, ratio36_1, false);
+motor intake = motor(PORT16, ratio6_1, false);
+
 // define your global instances of motors and other devices here
 
 /*---------------------------------------------------------------------------*/
@@ -58,23 +74,9 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-bool speldeMode = false;
-
-void toggleSpeldeMode() {
-  speldeMode = !speldeMode;
-};
-
 void usercontrol(void) {
-  // main peripherals
-  brain myBrain = brain();
-  controller myController = controller();
 
-  // motors
-  motor leftDriveMotor = motor(PORT11, ratio18_1, false);
-  motor rightDriveMotor = motor(PORT12, ratio18_1, true);
-  motor flyWheel = motor(PORT5, ratio36_1, false);
-
-  myController.ButtonUp.pressed(toggleSpeldeMode);
+  myController.ButtonX.pressed(toggleSpeldeMode);
 
   // User control code here, inside the loop
   while (1) {
@@ -96,9 +98,19 @@ void usercontrol(void) {
       rightDriveMotor.spin(forward, myController.Axis2.value(), percent);
     }
 
+    // flywheel
     flyWheel.spin(forward, myController.ButtonA.pressing() && 100 || 0, percent);
 
-    wait(20, msec); // Sleep the task for a short amount of time to
+    // intake
+    if (myController.ButtonR1.pressing()) {
+      intake.spin(forward, 50, percent);
+    } else if (myController.ButtonR2.pressing()) {
+      intake.spin(forward, -50, percent);
+    } else {
+      intake.stop();
+    }
+
+    wait(10, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
 }
