@@ -28,7 +28,7 @@ controller myController = controller();
 motor leftDriveMotor = motor(PORT11, ratio18_1, false);
 motor rightDriveMotor = motor(PORT12, ratio18_1, true);
 motor flyWheel = motor(PORT5, ratio36_1, false);
-motor intake = motor(PORT16, ratio6_1, false);
+motor intake = motor(PORT10, ratio6_1, false);
 
 // define your global instances of motors and other devices here
 
