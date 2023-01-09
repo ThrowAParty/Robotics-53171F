@@ -16,19 +16,24 @@ competition Competition;
 
 bool speldeMode = false;
 
-void toggleSpeldeMode() {
-  speldeMode = !speldeMode;
-};
-
 // main peripherals
 brain myBrain = brain();
 controller myController = controller();
 
 // motors
-motor leftDriveMotor = motor(PORT11, ratio18_1, false);
+motor leftDriveMotor = motor(PORT2, ratio18_1, false);
 motor rightDriveMotor = motor(PORT12, ratio18_1, true);
 motor flyWheel = motor(PORT5, ratio36_1, false);
 motor intake = motor(PORT10, ratio6_1, false);
+
+void toggleSpeldeMode() {
+  myController.rumble("..");
+  speldeMode = !speldeMode;
+
+  myController.Screen.clearScreen();
+  myController.Screen.setCursor(0, 0);
+  myController.Screen.print("Spelde Mode: " + (speldeMode && "Activated" || "Deactivated"));
+};
 
 // define your global instances of motors and other devices here
 

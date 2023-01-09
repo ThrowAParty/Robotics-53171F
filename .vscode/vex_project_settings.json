@@ -4,12 +4,12 @@
 		"json": 1
 	},
 	"project": {
-		"name": "TestingCode",
-		"description": "why use python when cpp",
+		"name": "MAIN",
+		"description": "The primary code for Shoreland's 53171F Robotics Team",
 		"creationDate": "12/8/2022, 4:21:27 PM",
 		"platform": "V5",
 		"language": "cpp",
-		"slot": 5,
+		"slot": 2,
 		"sdkVersion": "V5_20220726_10_00_00",
 		"cpp": {
 			"includePath": []
