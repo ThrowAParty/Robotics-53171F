@@ -99,9 +99,10 @@ void usercontrol(void) {
 
       int x = -myController.Axis4.value();
       int y = myController.Axis3.value();
+      int stickClamp = 127; // the min & max values the controller joysticks output
 
-      int v = (100 - abs(x)) * (y / 100) + y;
-      int w = (100 - abs(y)) * (x / 100) * (x / 100) + x;
+      int v = (stickClamp - abs(x)) * (y / stickClamp) + y;
+      int w = (stickClamp - abs(y)) * (x / stickClamp) + x;
 
       int r = (v + w) / 2;
       int l = (v - w) / 2;
@@ -110,8 +111,8 @@ void usercontrol(void) {
       rightDriveMotor.spin(forward, r, percent);
 
     } else {
-      leftDriveMotor.spin(forward, myController.Axis3.value(), percent);
-      rightDriveMotor.spin(forward, myController.Axis2.value(), percent);
+      leftDriveMotor.spin(forward, myController.Axis2.value(), percent);
+      rightDriveMotor.spin(forward, myController.Axis3.value(), percent);
     }
 
     // flywheel
