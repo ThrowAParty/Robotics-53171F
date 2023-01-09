@@ -91,8 +91,19 @@ void usercontrol(void) {
 
     // drive
     if (speldeMode) {
-      leftDriveMotor.spin(forward, myController.Axis3.value() * myController.Axis4.value() * 0.5, percent);
-      rightDriveMotor.spin(forward, myController.Axis3.value() * myController.Axis4.value() * 0.5, percent);
+
+      int x = -myController.Axis4.value();
+      int y = myController.Axis3.value();
+
+      int v = (100 - abs(x)) * (y / 100) + y;
+      int w = (100 - abs(y)) * (x / 100) * (x / 100) + x;
+
+      int r = (v + w) / 2;
+      int l = (v - w) / 2;
+
+      leftDriveMotor.spin(forward, l, percent);
+      rightDriveMotor.spin(forward, r, percent);
+
     } else {
       leftDriveMotor.spin(forward, myController.Axis3.value(), percent);
       rightDriveMotor.spin(forward, myController.Axis2.value(), percent);
@@ -103,9 +114,9 @@ void usercontrol(void) {
 
     // intake
     if (myController.ButtonR1.pressing()) {
-      intake.spin(forward, 50, percent);
+      intake.spin(forward, 100, percent);
     } else if (myController.ButtonR2.pressing()) {
-      intake.spin(forward, -50, percent);
+      intake.spin(forward, -100, percent);
     } else {
       intake.stop();
     }
